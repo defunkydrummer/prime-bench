@@ -13,14 +13,14 @@
 
 ;; example:
 ;; CL-USER> (timed-bench 10000000)
+
 ;; Evaluation took:
-;; 0.406 seconds of real time
-;; 0.406250 seconds of total run time (0.406250 user, 0.000000 system)
-;; 100.00% CPU
-;; 1,090,997,832 processor cycles
-;; 0 bytes consed
-;; 2285716
-;; (vector 4 2 4 2 4 6 2 6)
+;; 3.815 seconds of real time
+;; 3.796875 seconds of total run time (3.796875 user, 0.000000 system)
+;; 99.53% CPU
+;; 10,346,215,658 processor cycles
+;; 32,800 bytes consed
+;; 664579
 
 (declaim (optimize (speed 3) (safety 0) (debug 0) (space 0) ))
 
