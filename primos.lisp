@@ -49,10 +49,10 @@
        ((eq ,xvar ,yvar) (return-from ,blockname T))
        ((eq 0 (mod ,xvar ,yvar)) (return-from ,blockname nil)))))
 
-(defmacro loop-unroll-1 (list function-name xvar blockname)
+(defmacro loop-unroll-1 (list xvar blockname)
   "Unroll the loop with incvar = number on the list"
   (let ((forms (loop for number in list collecting
-                     `(,function-name ,xvar (the indextype ,number) ,blockname))))
+                     `(first-test ,xvar (the indextype ,number) ,blockname))))
     `(progn ,@forms
             )))
 
@@ -62,10 +62,10 @@
               (return-from ,blockname
                 nil))))
 
-(defmacro loop-unroll-2 (list function-name nvar xvar blockname)
+(defmacro loop-unroll-2 (list nvar xvar blockname)
   "Unroll the loop with incvar = number on the list"
   (let ((forms (loop for number in list collecting
-                     `(,function-name ,nvar (the indextype ,number) ,xvar ,blockname))))
+                     `(inc-comp ,nvar (the indextype ,number) ,xvar ,blockname))))
     `(progn ,@forms
             )))
 
@@ -73,10 +73,10 @@
   "T if number is prime, NIL if it doesn't"
   `(block main
     (setf ,nvar (the stype 7))
-    (loop-unroll-1 (2 3 5 7) first-test ,xvar main)
+    (loop-unroll-1 (2 3 5 7) ,xvar main)
     (loop while (<= (the dtype (* ,nvar ,nvar)) ,xvar)
           do
-          (loop-unroll-2 (4 2 4 2 4 6 2 6) inc-comp ,nvar ,xvar main))
+          (loop-unroll-2 (4 2 4 2 4 6 2 6) ,nvar ,xvar main))
     T))
 
 
