@@ -47,7 +47,7 @@
   `(progn
      (cond
        ((eq ,xvar ,yvar) (return-from ,blockname T))
-       ((eq 0 (mod ,xvar ,yvar)) (return-from ,blockname nil)))))
+       ((zerop (mod ,xvar ,yvar)) (return-from ,blockname nil)))))
 
 (defmacro loop-unroll-1 (list xvar blockname)
   "Unroll the loop with incvar = number on the list"
@@ -58,7 +58,7 @@
 
 (defmacro inc-comp (nvar incvar xvar blockname)
   `(progn (incf ,nvar ,incvar)
-          (if (eq 0 (mod ,xvar ,nvar))
+          (if (zerop (mod ,xvar ,nvar))
               (return-from ,blockname
                 nil))))
 
