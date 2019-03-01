@@ -42,21 +42,6 @@
 (deftype stype () '(unsigned-byte 64)) ;type for n          
 (deftype indextype () '(unsigned-byte 8)) ;type for small numbers
 
-;(declaim (ftype (function (stype) boolean) prime))
-;(declaim (inline prime))
-
-;(sb-ext:defglobal *n* (the stype 7))
-
-;; (make-array '(8)
-;;             :element-type 'stype
-;;             :adjustable nil
-;;             :fill-pointer nil
-;;             :displaced-to nil
-;;             :initial-contents '(4 2 4 2 4 6 2 6)
-;;             )
-
-;(declaim (type stype *n*))
-
 (defmacro first-test (xvar yvar blockname)
   `(progn
      (cond
@@ -107,7 +92,7 @@ accumulate the amount of primes found"
           start                         ;initial value
           (1+ x)))                      ;increment (next value)
         ((eq x limit)                   ;stop condition 
-         (the stype (1- amount)))       ; return value
+         (the stype amount))       ; return value
       (declare (type stype limit x))    ;block 
       (when (the boolean (prime x n))
         (incf amount)))))
@@ -138,7 +123,7 @@ accumulate the amount of primes found"
     (dolist (thread threads)
       (incf sum (the stype (sb-thread:join-thread thread)))
       (debugf "Thread says: ~D~%" sum))
-    sum))
+    (1- sum)))
 
 
 (defun timed-bench (limit)
